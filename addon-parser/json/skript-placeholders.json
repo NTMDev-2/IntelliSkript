@@ -1,0 +1,142 @@
+{
+  "metadata": {
+    "version": "1.7.1"
+  },
+  "expressions": [
+    {
+      "id": "ExprPlaceholder",
+      "name": "Placeholder",
+      "description": [
+        "An expression to obtain the placeholder (or part of it) in a placeholder request event."
+      ],
+      "examples": [
+        "placeholderapi placeholder with the prefix \"skriptplaceholders\":",
+        "\tbroadcast \"Placeholder: %the placeholder%\"",
+        "\tbroadcast \"Prefix: %the placeholder prefix%\"",
+        "\tbroadcast \"Identifier: %the placeholder identifier%\"",
+        "mvdw placeholder named \"skriptplaceholders_test\":",
+        "\tbroadcast \"Placeholder: %the placeholder%\""
+      ],
+      "since": [
+        "1.0.0, 1.3.0 (MVdWPlaceholderAPI support)"
+      ],
+      "return type": "Text",
+      "patterns": [
+        "[the] placeholder",
+        "[the] [placeholder] (prefix|identifier)"
+      ]
+    },
+    {
+      "id": "ExprPlaceholderResult",
+      "name": "Placeholder Result",
+      "description": [
+        "The value of a placeholder in a placeholder event. Can be set, reset, or deleted."
+      ],
+      "examples": [
+        "placeholderapi placeholder with the prefix \"skriptplaceholders\":",
+        "\tif the identifier is \"author\": # Placeholder is \"%skriptplaceholders_author%\"",
+        "\t\tset the result to \"APickledWalrus\"",
+        "mvdw placeholder named \"skriptplaceholders_author\":",
+        "\t# Placeholder is \"{skriptplaceholders_author}\"",
+        "\tset the result to \"APickledWalrus\""
+      ],
+      "since": [
+        "1.0.0, 1.3.0 (MVdWPlaceholderAPI support), 1.6.0 (using any type support)"
+      ],
+      "return type": "Text",
+      "changers": [
+        "delete",
+        "reset",
+        "set"
+      ],
+      "patterns": [
+        "[the] [placeholder] result"
+      ]
+    },
+    {
+      "id": "ExprPlaceholderValue",
+      "name": "Placeholder Value",
+      "description": [
+        "An expression to obtain the value of a placeholder from a supported plugin."
+      ],
+      "examples": [
+        "command /ping <player>:",
+        "\ttrigger:",
+        "\t\tset {_ping} to the placeholder \"player_ping\" from arg-1 # PlaceholderAPI",
+        "\t\tset {_ping} to the placeholder \"{ping}\" from arg-1 # MVdWPlaceholderAPI",
+        "\t\tsend \"Ping of %arg-1%: %{_ping}%\" to the player",
+        "command /friend status <player> <player>:",
+        "\ttrigger:",
+        "\tset {_status} to the relational placeholder \"rel_friendship_status\" from arg-1 and arg-2",
+        "\tsend \"Status: %{_status}%\" to the player"
+      ],
+      "since": [
+        "1.0.0, 1.2.0 (MVdWPlaceholderAPI support), 1.7.0 (relational placeholder support)"
+      ],
+      "return type": "Text",
+      "patterns": [
+        "[the] [value[s] of [the]] [relational] placeholder[s] [in] %strings% [(for|from|of) %players/offlineplayers%]",
+        "[relational] placeholder[s] %strings%'[s] value[s] [(for|from|of) %players/offlineplayers%]"
+      ]
+    },
+    {
+      "id": "ExprRelationalPlaceholderPlayers",
+      "name": "Relational Placeholder Players",
+      "description": [
+        "The two players involved in a relational placeholder request."
+      ],
+      "examples": [
+        "placeholderapi relational placeholder with the prefix \"skriptplaceholders\":",
+        "\tif the identifier is \"longer_name\": # Placeholder is \"%rel_skriptplaceholders_longer_name%\"",
+        "\t\tif the length of the name of the first player > the length of the name of the second player:",
+        "\t\t\tset the result to the name of the first player",
+        "\t\telse:",
+        "\t\t\tset the result to the name of the second player"
+      ],
+      "since": [
+        "1.7.0"
+      ],
+      "return type": "Player",
+      "changers": [
+        "add",
+        "remove",
+        "remove all"
+      ],
+      "patterns": [
+        "[the] first player",
+        "[the] second player"
+      ]
+    }
+  ],
+  "structures": [
+    {
+      "id": "StructCustomPlaceholder",
+      "name": "Custom Placeholder",
+      "description": [
+        "A structure for creating custom placeholders.",
+        "The code will be executed every time the placeholder plugin requests a value for the placeholder."
+      ],
+      "examples": [
+        "placeholderapi placeholder with the prefix \"skriptplaceholders\":",
+        "\tif the identifier is \"author\": # Placeholder is \"%skriptplaceholders_author%\"",
+        "\t\tset the result to \"APickledWalrus\"",
+        "placeholderapi relational placeholder with the prefix \"skriptplaceholders\":",
+        "\tif the identifier is \"longer_name\": # Placeholder is \"%rel_skriptplaceholders_longer_name%\"",
+        "\t\tif the length of the name of the first player > the length of the name of the second player:",
+        "\t\t\tset the result to the name of the first player",
+        "\t\telse:",
+        "\t\t\tset the result to the name of the second player",
+        "mvdw placeholder named \"skriptplaceholders_author\":",
+        "\t# Placeholder is \"{skriptplaceholders_author}\"",
+        "\tset the result to \"APickledWalrus\""
+      ],
+      "since": [
+        "1.0.0, 1.3.0 (MVdWPlaceholderAPI support), 1.7.0 (relational placeholder support)"
+      ],
+      "patterns": [
+        "(placeholder[ ]api|papi) [relational] placeholder (with|for) [the] prefix %*string%",
+        "(mvdw[ ]placeholder[ ]api|mvdw) placeholder [with [the] name|named] %*string%"
+      ]
+    }
+  ]
+}
