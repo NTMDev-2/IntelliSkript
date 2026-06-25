@@ -1,0 +1,106 @@
+{
+  "metadata": {
+    "version": "1.7.0"
+  },
+  "structures": [
+    {
+      "id": "custom_placeholder",
+      "name": "Custom Placeholder",
+      "description": [
+        "Registers a custom PlaceholderAPI or MVdWPlaceholderAPI placeholder."
+      ],
+      "examples": [
+        "placeholder with prefix \"test\":",
+        "\tset the result to player's name",
+        "",
+        "papi relational placeholder with prefix \"friends\":",
+        "\tset the result to \"%first player% -> %second player%\""
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "patterns": [
+        "(placeholder api|papi) [relational] placeholder (with|for) [the] prefix %*string%",
+        "(mvdw placeholder api|mvdw) placeholder [with [the] name|named] %*string%"
+      ]
+    }
+  ],
+  "expressions": [
+    {
+      "id": "placeholder",
+      "name": "Placeholder",
+      "description": [
+        "Represents the current placeholder identifier or prefix inside a custom placeholder section."
+      ],
+      "examples": [
+        "send placeholder to player",
+        "broadcast placeholder identifier"
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "patterns": [
+        "[the] placeholder",
+        "[the] [placeholder] (prefix|identifier)"
+      ],
+      "return type": "string"
+    },
+    {
+      "id": "placeholder_result",
+      "name": "Placeholder Result",
+      "description": [
+        "Represents the value returned by a custom placeholder."
+      ],
+      "examples": [
+        "set the result to player's name",
+        "set placeholder result to \"%player's uuid%\""
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "patterns": [
+        "[the] [placeholder] result"
+      ],
+      "return type": "object"
+    },
+    {
+      "id": "placeholder_value",
+      "name": "Placeholder Value",
+      "description": [
+        "Gets the value of one or more placeholders.",
+        "Supports PlaceholderAPI and relational placeholders."
+      ],
+      "examples": [
+        "send value of placeholder \"%player_name%\" to player",
+        "set {_v} to placeholder \"%vault_prefix%\" for player",
+        "send relational placeholder \"%friends_status%\" for player"
+      ],
+      "since": [
+        "1.0.0"
+      ],
+      "patterns": [
+        "[the] [value[s] of [the]] [relational] placeholder[s] [in] %strings% [(for|from|of) %-players/offlineplayers%]",
+        "[relational] placeholder[s] %strings%'[s] value[s] [(for|from|of) %-players/offlineplayers%]"
+      ],
+      "return type": "string"
+    },
+    {
+      "id": "relational_placeholder_players",
+      "name": "Relational Placeholder Players",
+      "description": [
+        "Returns the players involved in a relational placeholder request."
+      ],
+      "examples": [
+        "send \"%first player% -> %second player%\""
+      ],
+      "since": [
+        "1.7.0"
+      ],
+      "patterns": [
+        "[the] first player",
+        "[the] second player"
+      ],
+      "return type": "player"
+    }
+  ]
+}
