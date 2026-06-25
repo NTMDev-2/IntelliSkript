@@ -15,16 +15,16 @@
 IntelliSkript is the most advanced Skript extension for Visual Studio Code out there.
 ### IntelliSkript can:
 
-### format and check syntax/indentation errors<br>
+### Format and check syntax/indentation errors<br>
   ![Animation](https://user-images.githubusercontent.com/50964021/204584349-18d29e3a-ed19-4f58-99be-f9e0d4fda7cf.gif)
 instead of reporting a lot of nonsense errors when improperly indented, IntelliSkript will adjust indentation where necessary. format using shift + alt + F.
-### go to definition on effects, variables, event values and function arguments<br>
+### Go to definition on effects, variables, event values and function arguments<br>
   ![image](https://user-images.githubusercontent.com/50964021/204463996-8b9ee466-41a5-45f9-bedd-e3fa9b320771.png)
-### analyze `/sk reload` performance impact<br>
+### Analyze `/sk reload` performance impact<br>
   ![image](https://user-images.githubusercontent.com/50964021/204579516-09165dba-7638-4307-a51b-f275c3c20643.png)
-### smart highlight<br>
+### Smart highlight<br>
   ![Animation](https://github.com/JohnHeikens/IntelliSkript/assets/50964021/69d210dc-e924-45f7-9dc1-9019912b8d83)
-### show docs<br>
+### Show docs<br>
   ![Go to definition](https://github.com/user-attachments/assets/05302532-f2c1-4ffb-9d18-4ba1e8191f5a)
 it analyzes syntax from loads of different skript addons and generates a fake skript reflect file for each addon for documentation purposes.
 
