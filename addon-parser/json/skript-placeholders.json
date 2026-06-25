@@ -1,106 +1,142 @@
 {
   "metadata": {
-    "version": "1.7.0"
+    "version": "1.7.1"
   },
-  "structures": [
-    {
-      "id": "custom_placeholder",
-      "name": "Custom Placeholder",
-      "description": [
-        "Registers a custom PlaceholderAPI or MVdWPlaceholderAPI placeholder."
-      ],
-      "examples": [
-        "placeholder with prefix \"test\":",
-        "\tset the result to player's name",
-        "",
-        "papi relational placeholder with prefix \"friends\":",
-        "\tset the result to \"%first player% -> %second player%\""
-      ],
-      "since": [
-        "1.0.0"
-      ],
-      "patterns": [
-        "(placeholder api|papi) [relational] placeholder (with|for) [the] prefix %*string%",
-        "(mvdw placeholder api|mvdw) placeholder [with [the] name|named] %*string%"
-      ]
-    }
-  ],
   "expressions": [
     {
-      "id": "placeholder",
+      "id": "ExprPlaceholder",
       "name": "Placeholder",
       "description": [
-        "Represents the current placeholder identifier or prefix inside a custom placeholder section."
+        "An expression to obtain the placeholder (or part of it) in a placeholder request event."
       ],
       "examples": [
-        "send placeholder to player",
-        "broadcast placeholder identifier"
+        "placeholderapi placeholder with the prefix \"skriptplaceholders\":",
+        "\tbroadcast \"Placeholder: %the placeholder%\"",
+        "\tbroadcast \"Prefix: %the placeholder prefix%\"",
+        "\tbroadcast \"Identifier: %the placeholder identifier%\"",
+        "mvdw placeholder named \"skriptplaceholders_test\":",
+        "\tbroadcast \"Placeholder: %the placeholder%\""
       ],
       "since": [
-        "1.0.0"
+        "1.0.0, 1.3.0 (MVdWPlaceholderAPI support)"
       ],
+      "return type": "Text",
       "patterns": [
         "[the] placeholder",
         "[the] [placeholder] (prefix|identifier)"
-      ],
-      "return type": "string"
+      ]
     },
     {
-      "id": "placeholder_result",
+      "id": "ExprPlaceholderResult",
       "name": "Placeholder Result",
       "description": [
-        "Represents the value returned by a custom placeholder."
+        "The value of a placeholder in a placeholder event. Can be set, reset, or deleted."
       ],
       "examples": [
-        "set the result to player's name",
-        "set placeholder result to \"%player's uuid%\""
+        "placeholderapi placeholder with the prefix \"skriptplaceholders\":",
+        "\tif the identifier is \"author\": # Placeholder is \"%skriptplaceholders_author%\"",
+        "\t\tset the result to \"APickledWalrus\"",
+        "mvdw placeholder named \"skriptplaceholders_author\":",
+        "\t# Placeholder is \"{skriptplaceholders_author}\"",
+        "\tset the result to \"APickledWalrus\""
       ],
       "since": [
-        "1.0.0"
+        "1.0.0, 1.3.0 (MVdWPlaceholderAPI support), 1.6.0 (using any type support)"
+      ],
+      "return type": "Text",
+      "changers": [
+        "delete",
+        "reset",
+        "set"
       ],
       "patterns": [
         "[the] [placeholder] result"
-      ],
-      "return type": "object"
+      ]
     },
     {
-      "id": "placeholder_value",
+      "id": "ExprPlaceholderValue",
       "name": "Placeholder Value",
       "description": [
-        "Gets the value of one or more placeholders.",
-        "Supports PlaceholderAPI and relational placeholders."
+        "An expression to obtain the value of a placeholder from a supported plugin."
       ],
       "examples": [
-        "send value of placeholder \"%player_name%\" to player",
-        "set {_v} to placeholder \"%vault_prefix%\" for player",
-        "send relational placeholder \"%friends_status%\" for player"
+        "command /ping <player>:",
+        "\ttrigger:",
+        "\t\tset {_ping} to the placeholder \"player_ping\" from arg-1 # PlaceholderAPI",
+        "\t\tset {_ping} to the placeholder \"{ping}\" from arg-1 # MVdWPlaceholderAPI",
+        "\t\tsend \"Ping of %arg-1%: %{_ping}%\" to the player",
+        "command /friend status <player> <player>:",
+        "\ttrigger:",
+        "\tset {_status} to the relational placeholder \"rel_friendship_status\" from arg-1 and arg-2",
+        "\tsend \"Status: %{_status}%\" to the player"
       ],
       "since": [
-        "1.0.0"
+        "1.0.0, 1.2.0 (MVdWPlaceholderAPI support), 1.7.0 (relational placeholder support)"
       ],
+      "return type": "Text",
       "patterns": [
-        "[the] [value[s] of [the]] [relational] placeholder[s] [in] %strings% [(for|from|of) %-players/offlineplayers%]",
-        "[relational] placeholder[s] %strings%'[s] value[s] [(for|from|of) %-players/offlineplayers%]"
-      ],
-      "return type": "string"
+        "[the] [value[s] of [the]] [relational] placeholder[s] [in] %strings% [(for|from|of) %players/offlineplayers%]",
+        "[relational] placeholder[s] %strings%'[s] value[s] [(for|from|of) %players/offlineplayers%]"
+      ]
     },
     {
-      "id": "relational_placeholder_players",
+      "id": "ExprRelationalPlaceholderPlayers",
       "name": "Relational Placeholder Players",
       "description": [
-        "Returns the players involved in a relational placeholder request."
+        "The two players involved in a relational placeholder request."
       ],
       "examples": [
-        "send \"%first player% -> %second player%\""
+        "placeholderapi relational placeholder with the prefix \"skriptplaceholders\":",
+        "\tif the identifier is \"longer_name\": # Placeholder is \"%rel_skriptplaceholders_longer_name%\"",
+        "\t\tif the length of the name of the first player > the length of the name of the second player:",
+        "\t\t\tset the result to the name of the first player",
+        "\t\telse:",
+        "\t\t\tset the result to the name of the second player"
       ],
       "since": [
         "1.7.0"
       ],
+      "return type": "Player",
+      "changers": [
+        "add",
+        "remove",
+        "remove all"
+      ],
       "patterns": [
         "[the] first player",
         "[the] second player"
+      ]
+    }
+  ],
+  "structures": [
+    {
+      "id": "StructCustomPlaceholder",
+      "name": "Custom Placeholder",
+      "description": [
+        "A structure for creating custom placeholders.",
+        "The code will be executed every time the placeholder plugin requests a value for the placeholder."
       ],
-      "return type": "player"
+      "examples": [
+        "placeholderapi placeholder with the prefix \"skriptplaceholders\":",
+        "\tif the identifier is \"author\": # Placeholder is \"%skriptplaceholders_author%\"",
+        "\t\tset the result to \"APickledWalrus\"",
+        "placeholderapi relational placeholder with the prefix \"skriptplaceholders\":",
+        "\tif the identifier is \"longer_name\": # Placeholder is \"%rel_skriptplaceholders_longer_name%\"",
+        "\t\tif the length of the name of the first player > the length of the name of the second player:",
+        "\t\t\tset the result to the name of the first player",
+        "\t\telse:",
+        "\t\t\tset the result to the name of the second player",
+        "mvdw placeholder named \"skriptplaceholders_author\":",
+        "\t# Placeholder is \"{skriptplaceholders_author}\"",
+        "\tset the result to \"APickledWalrus\""
+      ],
+      "since": [
+        "1.0.0, 1.3.0 (MVdWPlaceholderAPI support), 1.7.0 (relational placeholder support)"
+      ],
+      "patterns": [
+        "(placeholder[ ]api|papi) [relational] placeholder (with|for) [the] prefix %*string%",
+        "(mvdw[ ]placeholder[ ]api|mvdw) placeholder [with [the] name|named] %*string%"
+      ]
     }
   ]
 }
