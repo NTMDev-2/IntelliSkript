@@ -1,0 +1,39 @@
+{
+  "metadata": {
+    "version": "3.0"
+  },
+  "effects": [
+    {
+      "id": "EffClearPDC",
+      "name": "EffClearPDC",
+      "patterns": [
+        "clear [all] pdc (of|from) %objects%",
+        "(remove|delete) pdc tag[s] %strings% (of|from) %objects%"
+      ]
+    }
+  ],
+  "expressions": [
+    {
+      "id": "ExprAllPDCTags",
+      "name": "ExprAllPDCTags",
+      "return type": "Text",
+      "patterns": [
+        "[all] [the] pdc tag[s] of %objects%"
+      ]
+    },
+    {
+      "id": "ExprPDC",
+      "name": "ExprPDC",
+      "return type": "Object",
+      "changers": [
+        "add",
+        "delete",
+        "remove",
+        "set"
+      ],
+      "patterns": [
+        "pdc tag %string% of %objects%"
+      ]
+    }
+  ]
+}
